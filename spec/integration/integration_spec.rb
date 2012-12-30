@@ -49,25 +49,14 @@ describe 'Packaging and running a project' do
     end
 
     it 'includes the project files' do
-      jar_entries.should include('test_project.rb')
-      jar_entries.should include('word_count.rb')
-      jar_entries.should include('uniques.rb')
+      jar_entries.should include('classes/test_project.rb')
+      jar_entries.should include('classes/word_count.rb')
+      jar_entries.should include('classes/uniques.rb')
     end
 
     it 'includes gem dependencies' do
-      jar_entries.should include('json.rb')
-      jar_entries.should include('json/')
-    end
-
-    context 'when paths collide' do
-      it 'selects project files over gem files' do
-        file_io = jar.get_input_stream(jar.get_jar_entry('paint/util.rb')).to_io
-        file_io.read.should include('# this overrides paint/util.rb')
-      end
-
-      it 'merges directories from the project and gems' do
-        jar_entries.should include('json/add/complex.rb')
-      end
+      jar_entries.should include('classes/lib/json.rb')
+      jar_entries.should include('classes/lib/json/')
     end
 
     it 'includes jruby-complete.jar' do
@@ -98,9 +87,9 @@ describe 'Packaging and running a project' do
 
     context 'with gems that require special handling' do
       it 'includes the modified layout of the jruby-openssl gem' do
-        jar_entries.should include('openssl.rb')
-        jar_entries.should include('openssl/ssl.rb')
-        jar_entries.should include('openssl/1.9/openssl/digest.rb')
+        jar_entries.should include('classes/lib/openssl.rb')
+        jar_entries.should include('classes/lib/openssl/ssl.rb')
+        jar_entries.should include('classes/lib/openssl/1.9/openssl/digest.rb')
       end
     end
   end

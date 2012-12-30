@@ -1,12 +1,13 @@
 # encoding: utf-8
 
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__)) + '/lib'
+
 require 'rubydoop'
 require 'json'
 require 'openssl' # this just asserts that jruby-openssl was packaged correctly
 
 require 'word_count'
 require 'uniques'
-
 
 Rubydoop.configure do |input_path, output_path|
   job 'word_count' do
